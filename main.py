@@ -15,30 +15,30 @@ def ejercicio1():
     if request.method == 'POST':
         try:
             nombre = request.form['nombre'].strip()
-            edad_texto = request.form['edad'].strip()
-            tarros_texto = request.form['cantidad_tarros'].strip()
+            edad_inp = request.form['edad'].strip()
+            tarros_inp = request.form['cantidad_tarros'].strip()
 
             if not nombre:
                 raise ValueError("Debe ingresar un nombre")
 
-            if not edad_texto:
+            if not edad_inp:
                 raise ValueError("Debe ingresar su edad")
-            if not edad_texto.isdigit():
+            if not edad_inp.isdigit():
                 raise ValueError("Debe ingresar un número válido para la edad")
-            edad = int(edad_texto)
+            edad = int(edad_inp)
             if edad < 0:
                 raise ValueError("La edad no puede ser negativa")
 
-            if not tarros_texto:
+            if not tarros_inp:
                 raise ValueError("Debe ingresar la cantidad de tarros a comprar")
-            if not tarros_texto.isdigit():
+            if not tarros_inp.isdigit():
                 raise ValueError("Debe ingresar un número válido para la cantidad de tarros")
-            cantidad_tarros = int(tarros_texto)
+            cantidad_tarros = int(tarros_inp)
             if cantidad_tarros < 1:
                 raise ValueError("Debe comprar al menos un tarro")
 
-            edad = int(edad_texto)
-            cantidad_tarros = int(tarros_texto)
+            edad = int(edad_inp)
+            cantidad_tarros = int(tarros_inp)
 
             total_sin_descuento = cantidad_tarros * VALOR_TARRO
 
@@ -72,9 +72,9 @@ def ejercicio1():
 
 #  Desarrollo ejercicio 2
 
-USUARIOS_REGISTRADOS = {
-    "juan": {"contrasena": "admin", "rol": "Administrador"},
-    "pepe": {"contrasena": "user", "rol": "Usuario"}
+USUARIOS_VALIDOS = {
+    "juan": {"password": "admin", "rol": "Administrador"},
+    "pepe": {"password": "user", "rol": "Usuario"}
 }
 
 @app.route('/ejercicio_2', methods=['GET', 'POST'])
@@ -83,14 +83,14 @@ def ejercicio2():
 
     if request.method == 'POST':
         usuario_ingresado = request.form.get('usuario', '').lower()
-        contrasena_ingresada = request.form.get('contrasena', '')
+        password_ingresada = request.form.get('password', '')
 
-        usuario_info = USUARIOS_REGISTRADOS.get(usuario_ingresado)
+        usuario_info = USUARIOS_VALIDOS.get(usuario_ingresado)
 
-        if usuario_info and usuario_info['contrasena'] == contrasena_ingresada:
+        if usuario_info and usuario_info['password'] == password_ingresada:
             mensaje = f"Bienvenido {usuario_info['rol']} {usuario_ingresado}"
         else:
-            mensaje = "Usuario o contraseña incorrectos"
+            mensaje = "Usuario o contraseña no corresponde"
 
     return render_template('ejercicio_2.html', mensaje=mensaje)
 
