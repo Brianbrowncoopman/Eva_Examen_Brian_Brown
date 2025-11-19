@@ -1,8 +1,34 @@
-{% extends 'base.html' %}
-{% block title %}Ejercicio 1% endblock %}
+{% extends "Base.html" %}
+{% block title %}Ejercicio 1{% endblock %}
 
 {% block content %}
-  <div class="main-container">
-    <h1>Ejercicio 1</h1>
-  </div>
+<div class="form-container">
+    <form method="POST" class="formulario">
+        <h1>Cálculo de compras</h1>
+
+        <label>Ingresa tu nombre</label>
+        <input type="text" name="nombre" placeholder="Ingresa tu nombre" value="{{ request.form.nombre }}">
+
+        <label>Ingresa tu edad</label>
+        <input type="text" name="edad" placeholder="Ingresa tu edad" value="{{ request.form.edad }}">
+
+        <label>Ingresa la cantidad de tarros de pintura a comprar</label>
+        <input type="text" name="cantidad_tarros" placeholder="Ingresa la cantidad de tarros" value="{{ request.form.cantidad_tarros }}">
+
+        <button type="submit" class="boton-formulario">Calcular</button>
+    </form>
+
+    {% if resultado %}
+        {% if resultado.error %}
+            <p class="mensaje-error">{{ resultado.error }}</p>
+        {% else %}
+            <div class="resultado">
+                <p>Nombre del cliente: {{ resultado.nombre }}</p>
+                <p>Total sin descuento: ${{ resultado.total_sin_descuento }}</p>
+                <p>El descuento es: ${{ resultado.monto_descuento }}</p>
+                <p>El total a pagar es de: ${{ resultado.total_a_pagar }}</p>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
 {% endblock %}
